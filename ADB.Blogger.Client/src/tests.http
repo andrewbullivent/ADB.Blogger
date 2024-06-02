@@ -1,0 +1,14 @@
+curl -X 'POST' \
+  'https://localhost:44331/login?useCookies=true' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "email": "andy.bullivent@gmail.com",
+  "password": "Abcd1234!"
+}'
+
+###
+
+curl -X 'GET' \
+  'https://localhost:44331/manage/info' \
+  -H 'accept: application/json'

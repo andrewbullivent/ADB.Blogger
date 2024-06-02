@@ -1,0 +1,38 @@
+<h1 class="" *ngIf="isAddMode">Add New Post</h1>
+<h1 *ngIf="!isAddMode">Edit Post</h1>
+
+<div class="w-full">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-left" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2 " for="title">Title</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" formControlName="title" [ngClass]="{'is-invalid': submitted && f['title'].errors}" />
+            <div *ngIf="submitted && f['title'].errors" class="invalid-feedback">
+                <div *ngIf="f['title'].errors['required']">Article Title is required</div>
+            </div>
+        </div>
+       
+       
+        <div class="mb-6">
+            <label class="text-gray-700 text-sm font-bold mb-2" for="body">Article Text</label>
+            <editor
+                apiKey="sz9m4srg41k6rwza7th2l228sgcpygme2bc5tvmrnqirvpe4"
+                formControlName="body"
+                [init]="{ 
+                    base_url: '/tinymce',
+                    suffix: '.min',
+                    plugins: 'lists link image table code help wordcount'
+                }"
+            ></editor>
+            <!-- <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" formControlName="body" [ngClass]="{'is-invalid': submitted && f['body'].errors}" /> -->
+        </div>
+      
+        <div class="flex items-center justify-between">
+            <button [disabled]="loading" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Save
+            </button>
+            <a routerLink="/post" class="bg-slate-100 py-2 px-4 hover:outline-2 hover:bg-slate-300 focus:outline-2 focus:bg-slate-500 inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Cancel</a>
+        </div>
+    </form>
+</div>

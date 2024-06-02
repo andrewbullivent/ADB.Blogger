@@ -1,0 +1,18 @@
+jw-modal {
+    display: none;
+}
+jw-modal .jw-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background-color: rgba(0,0,0,0.75);
+    padding: 400px;
+    overflow: auto;
+}
+jw-modal .jw-modal-body {
+    padding: 20px;
+    background: #fff;
+}
+body.jw-modal-open {
+    overflow: hidden;
+}

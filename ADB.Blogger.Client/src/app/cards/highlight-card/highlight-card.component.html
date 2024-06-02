@@ -1,0 +1,11 @@
+
+    <div routerLink="{{post.id}}" class="transform flex relative m-4 max-w-sm bg-white border border-gray-200 rounded-lg overflow-hidden shadow dark:bg-gray-800 dark:border-gray-700 transition duration-200 hover:scale-105">
+    
+        <img class="rounded-t-lg object-cover"  src="../../../assets/code.jpg" alt="code" />
+        <div class="absolute inset-0 bg-gradient-to-br from-black to-transparent"></div> 
+        <div id="text" class="absolute text-left inset-0 p-2 text-white z-50">
+            <h1 class="font-sans font-bold text-2xl">{{post.title}}</h1>
+            <h2 class="text-slate-300">{{post.createdAt | date:'fullDate'}}</h2>
+        </div>
+    </div>
+

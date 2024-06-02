@@ -1,0 +1,11 @@
+[
+  {
+    "name": "My test MySQL database", 
+    "type": "mysql", 
+    "host": "<host>",
+    "port": "<port>",
+    "username": "root",
+    "password": "T0p$3cr3t",
+    "database": "test" // <-- the database to show in VS Code DevDb view
+  }
+]

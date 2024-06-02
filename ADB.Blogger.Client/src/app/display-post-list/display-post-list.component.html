@@ -1,0 +1,55 @@
+
+<div class="flex flex-col items-center">
+    <div class=" flex flex-row flex-1 w-1/2 items-stretch py-2" *ngIf="result.actions && result.actions.length >1" >
+        <button routerLink="/post/new" class="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300">
+            <span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+            <span class="relative">New Post</span>
+        </button>
+
+
+        <div class="" role="">
+            <button (click)="menuOpen = !menuOpen" (blur)="menuOpen = false" class="flex flex-row relative rounded px-5 py-2.5 shadow self-end"
+                >View
+                <svg class="h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor"><path fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10
+                        10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd" /></svg>
+            </button>
+            <div>
+            </div>
+
+            <div *ngIf="menuOpen" class="absolute shadow z-50 overflow-visible flex flex-col w-32 bg-white text-black cursor-pointer" >
+                <div (click)="changeView(false)" class="min-w-10 px-2 py-1 hover:bg-slate-50" [ngClass]="{'bg-slate-300': !viewTile,'hover:bg-slate-50': viewTile}" >
+                    List View
+                </div>
+                <div (click)="changeView(true)" class="min-w-10 px-2 py-1"  [ngClass]="{'bg-slate-300': viewTile,'hover:bg-slate-50': !viewTile}" >
+                    Tile View
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <ul *ngIf="!viewTile" class="flex flex-col flex-1 w-1/2 z-10">
+        <li *ngFor="let post of result.data; index as i" 
+            class="shadow relative rounded px-5 py-2.5 my-1 overflow-hidden group bg-white hover:bg-gradient-to-r hover:from-white hover:to-slate-50 hover:ring-slate-50 hover:ring-2 hover:ring-offset-2 transition-all ease-out duration-600">
+            <div class="text-left items-center">
+                <div routerLink="{{post.id}}" class="cursor-pointer relative rounded px-5 py-2.5 overflow-hidden group">
+                    <span class="absolute left-0 w-8 h-32 -mt-12 bg-white opacity-10 "></span>
+                    <span class="" [innerText]="post.title"></span>
+                </div>
+            </div>
+            
+        </li>
+    </ul>
+
+    <div *ngIf="viewTile" class="flex flex-row flex-wrap justify-center w-1/2 z-10">
+        <div class="flex flex-row flex-wrap justify-center w-full z-10">
+            <app-heading-card [post]="highlightedPost"></app-heading-card>
+        </div>
+        <app-highlight-card *ngFor="let post of result.data | slice:1; index as i" [post]="post"> </app-highlight-card>
+    </div>
+
+</div>

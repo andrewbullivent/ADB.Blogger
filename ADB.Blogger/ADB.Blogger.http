@@ -1,0 +1,6 @@
+@ADB.Blogger_HostAddress = http://localhost:5051
+
+GET {{ADB.Blogger_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
