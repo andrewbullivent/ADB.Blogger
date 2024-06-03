@@ -6,7 +6,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Supabase;
 using System;
 
 namespace ADB.Blogger
@@ -37,18 +36,6 @@ namespace ADB.Blogger
                 .AddPolicy("update", policy => policy.RequireRole("Admin"))
                 .AddPolicy("delete", policy => policy.RequireRole("Admin"));
 
-            // Supabase storage
-            var sbOptions = new SupabaseOptions
-            {
-                AutoRefreshToken = true,
-                AutoConnectRealtime = true
-            };
-
-            var url = builder.Configuration["Supabase:url"];
-            var secret = builder.Configuration["Supabase:secret"];
-
-
-            builder.Services.AddSingleton(provider => new Supabase.Client(url, secret, sbOptions));
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("adbBlogger")));
