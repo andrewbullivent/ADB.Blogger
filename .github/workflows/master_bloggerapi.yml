@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'bloggerapi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4E06399452DF47EF9BB850DF47FA4E3D }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_19607537773F41939F79F3F7C5B10215 }}
           package: .
