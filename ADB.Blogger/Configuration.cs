@@ -60,13 +60,17 @@ namespace ADB.Blogger
 
         }
 
-        private static async Task SeedRolesAndAccount(this IHost host)
+        private static async Task SeedRolesAndAccount(this WebApplication host)
         {
             using var scope = host.Services.CreateScope();
             IServiceProvider servicesProvider = scope.ServiceProvider;
 
             var roleManager = servicesProvider.GetService<RoleManager<IdentityRole>>();
             var userManager = servicesProvider.GetService<UserManager<ApplicationUser>>();
+            var user = host.Configuration["user"] ?? "andy.bullivent@gmail.com";
+            var email = host.Configuration["email"] ?? "andy.bullivent@gmail.com";
+            var pw = host.Configuration["pw"];
+
 
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
@@ -78,18 +82,20 @@ namespace ADB.Blogger
                 await roleManager.CreateAsync(new IdentityRole("User"));
             }
 
-            var admin = await userManager.FindByEmailAsync("andy.bullivent@gmail.com");
+            var admin = await userManager.FindByEmailAsync(email);
             if (admin == null)
             {
                 await userManager.CreateAsync(new ApplicationUser()
                 {
-                    Email = "andy.bullivent@gmail.com",
+                    Email = email,
                     FirstName = "Andy",
                     Surname = "Bullivent",
-                    UserName = "andy.bullivent@gmail.com"
+                    UserName = user
                 });
 
-                admin = await userManager.FindByEmailAsync("andy.bullivent@gmail.com");
+                admin = await userManager.FindByEmailAsync(email);
+                PasswordHasher<ApplicationUser> ph = new();
+                admin.PasswordHash = ph.HashPassword(admin, pw);
             }
 
             if (!await userManager.IsInRoleAsync(admin, "Admin"))
