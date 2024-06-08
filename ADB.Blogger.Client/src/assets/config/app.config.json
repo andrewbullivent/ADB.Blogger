@@ -1,6 +1,6 @@
 {
     "appSettings":{
         "appTitle":"ADB Blogger",
-        "apiBaseUrl":"https://localhost:44331"
+        "apiBaseUrl":"https://bloggerapi.azurewebsites.net/"
     }
 }
