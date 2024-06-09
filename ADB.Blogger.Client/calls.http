@@ -1,0 +1,17 @@
+post https://bloggerapi.azurewebsites.net/forgotpassword
+Content-Type: application/json
+
+{
+  "email": "andy.bullivent@gmail.com"
+}
+
+
+###
+
+post https://bloggerapi.azurewebsites.net/register
+Content-Type: application/json
+
+{
+  "email": "andy@myaddress.com",
+  "password": "Abcd1234!",
+}

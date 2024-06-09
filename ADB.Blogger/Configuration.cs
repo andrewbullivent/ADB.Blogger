@@ -6,6 +6,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using System;
 
 namespace ADB.Blogger
@@ -14,6 +15,15 @@ namespace ADB.Blogger
     {
         public static async void RegisterServices(this WebApplicationBuilder builder)
         {
+
+            builder.Logging.AddAzureWebAppDiagnostics();
+            builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            {
+                options.FileName = "azure-diagnostics-";
+                options.FileSizeLimit = 50 * 1024;
+                options.RetainedFileCountLimit = 5;
+            });
+
             // Add services to the container.
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -71,6 +81,8 @@ namespace ADB.Blogger
             var email = host.Configuration["email"] ?? "andy.bullivent@gmail.com";
             var pw = host.Configuration["pw"];
 
+            host.Logger.Log(LogLevel.Information, "Checking for user {user}", user);
+
 
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
@@ -85,17 +97,26 @@ namespace ADB.Blogger
             var admin = await userManager.FindByEmailAsync(email);
             if (admin == null)
             {
+
+                PasswordHasher<ApplicationUser> ph = new();
+                host.Logger.Log(LogLevel.Warning, "No admin user found, creating default user {user}", user);
                 await userManager.CreateAsync(new ApplicationUser()
                 {
                     Email = email,
                     FirstName = "Andy",
                     Surname = "Bullivent",
-                    UserName = user
+                    UserName = user,
+                    PasswordHash = ph.HashPassword(admin, pw)
                 });
 
                 admin = await userManager.FindByEmailAsync(email);
-                PasswordHasher<ApplicationUser> ph = new();
-                admin.PasswordHash = ph.HashPassword(admin, pw);
+
+                if (admin == null)
+                {
+                    host.Logger.Log(LogLevel.Error, "Couldn't create admin user {user}!", user);
+
+                    throw new Exception("Couldn't create admin user!!");
+                }
             }
 
             if (!await userManager.IsInRoleAsync(admin, "Admin"))
