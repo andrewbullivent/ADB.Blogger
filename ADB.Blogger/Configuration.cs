@@ -24,6 +24,8 @@ namespace ADB.Blogger
                 options.RetainedFileCountLimit = 5;
             });
 
+            var clientSite = builder.Configuration["client_site"] ?? "https://localhost:4200";
+
             // Add services to the container.
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -33,7 +35,7 @@ namespace ADB.Blogger
                 options.AddPolicy(name: "open", policy =>
                 {
                     policy
-                        .WithOrigins("https://localhost:4200")
+                        .WithOrigins(clientSite)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
