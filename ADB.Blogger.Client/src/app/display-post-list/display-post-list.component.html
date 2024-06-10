@@ -45,11 +45,17 @@
         </li>
     </ul>
 
-    <div *ngIf="viewTile" class="flex flex-row flex-wrap justify-center w-1/2 z-10">
+    <div *ngIf="viewTile && highlightedPost.id != ''" class="flex flex-row flex-wrap justify-center w-1/2 z-10">
         <div class="flex flex-row flex-wrap justify-center w-full z-10">
             <app-heading-card [post]="highlightedPost"></app-heading-card>
         </div>
         <app-highlight-card *ngFor="let post of result.data | slice:1; index as i" [post]="post"> </app-highlight-card>
+    </div>
+    <div *ngIf="loading">
+        I'm just loading the posts now...
+    </div>
+    <div *ngIf="error">
+        Oh no, there was an error loading the posts!
     </div>
 
 </div>
