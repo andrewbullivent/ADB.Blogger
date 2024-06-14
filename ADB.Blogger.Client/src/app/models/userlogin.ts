@@ -8,5 +8,6 @@ export interface UserDto {
 export interface UserInfo {
   email: string;
   isEmailConfirmed: boolean;
+  roles: string[];
 }
   

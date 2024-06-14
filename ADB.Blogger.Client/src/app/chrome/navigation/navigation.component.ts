@@ -14,12 +14,14 @@ export class NavigationComponent {
   },
   {
     title: 'Test',
-    route: '/test'
+    route: '/test',
+    rights: 'admin'
   },
   {
     title: 'Login',
     route: '/login'
   }
   ];
+
 
 }

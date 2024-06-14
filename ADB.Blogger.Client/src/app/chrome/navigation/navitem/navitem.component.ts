@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 export class NavitemComponent {
   @Input() itemTitle: string | undefined;
   @Input() itemRoute: string | undefined; // 
+  @Input() itemRights: string | undefined; //
 
 }

@@ -3,6 +3,7 @@ using ADB.Blogger.Infrastructure.Identity;
 using Carter;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ADB.Blogger.Application.Endpoints
 {
@@ -17,6 +18,16 @@ namespace ADB.Blogger.Application.Endpoints
             })
             .WithOpenApi()
             .RequireAuthorization();
+
+            app.MapGet("/roles", (HttpContext ctx) =>
+            {
+                if (ctx.User is null)
+                {
+                    return Results.Ok<string[]>([]);
+                }
+                return Results.Ok(ctx.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToArray());
+            });
         }
+
     }
 }

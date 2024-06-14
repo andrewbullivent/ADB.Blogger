@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Subject, map, Observable, catchError, retry, throwError, of } from 'rxjs';
+import { BehaviorSubject, Subject, map, Observable, catchError, retry, throwError, of, switchMap } from 'rxjs';
 import Config  from '../../assets/config/app.config.json'
 import { UserInfo } from '../models/userlogin';
 
@@ -12,6 +12,7 @@ export class LoginService {
   private loginUrl = '/login?useCookies=true';
   private logoutUrl = '/logout';
   private userInfoUrl = '/manage/info'
+  private rolesUrl = '/roles';
   private baseUrl = Config.appSettings.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
@@ -80,7 +81,20 @@ export class LoginService {
       return this.http.get<UserInfo>(`${this.baseUrl}${this.userInfoUrl}`, {
       withCredentials:true
     }).pipe(
-        catchError(() => {
+        switchMap(userInfo => {
+          return this.http.get<string[]>(`${this.baseUrl}${this.rolesUrl}`)
+          .pipe(map(roles=>{
+            return {
+              email: userInfo.email,
+              isEmailConfirmed: userInfo.isEmailConfirmed,
+              roles: roles
+            }
+          }))
+        }),
+        catchError((error: HttpErrorResponse) => {
+          if(error.status == 401){
+            console.log("User is not authenticated.");
+          }
           return of({} as UserInfo);
         }));
     }
@@ -95,6 +109,15 @@ export class LoginService {
         catchError(() => {
           return of(false);
         }));
+    }
+
+    public roles(): Observable<string[]> {
+      return this.http.get<string[]>(`${this.baseUrl}${this.rolesUrl}`, {
+        withCredentials:true
+      }).pipe(
+          catchError(() => {
+            return of({} as string[]);
+          }));
     }
   }
 
