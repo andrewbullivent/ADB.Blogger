@@ -26,7 +26,9 @@ namespace ADB.Blogger.Application.Endpoints
                     return Results.Ok<string[]>([]);
                 }
                 return Results.Ok(ctx.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToArray());
-            });
+            })
+                .WithOpenApi()
+            .RequireAuthorization(); ;
         }
 
     }
