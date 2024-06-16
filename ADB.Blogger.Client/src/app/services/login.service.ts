@@ -82,7 +82,9 @@ export class LoginService {
       withCredentials:true
     }).pipe(
         switchMap(userInfo => {
-          return this.http.get<string[]>(`${this.baseUrl}${this.rolesUrl}`)
+          return this.http.get<string[]>(`${this.baseUrl}${this.rolesUrl}`, {
+            withCredentials:true
+        })
           .pipe(map(roles=>{
             return {
               email: userInfo.email,
