@@ -48,5 +48,4 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 cp ./ADB.Blogger.Client/dist/* s3://blog.nonplanar.me
-  
+          aws s3 sync ./ADB.Blogger.Client/dist/* s3://blog.nonplanar.me/ --delete  
