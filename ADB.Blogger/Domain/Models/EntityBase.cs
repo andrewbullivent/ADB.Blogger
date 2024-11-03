@@ -1,5 +1,4 @@
 ﻿using ADB.Blogger.Infrastructure.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ADB.Blogger.Domain.Models;
 

@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADB.Blogger", "ADB.Blogger\
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "ADB.Blogger.Client", "ADB.Blogger.Client\ADB.Blogger.Client.esproj", "{6CF3457D-4456-485A-ACF8-079FF0327226}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{68E70151-E92A-4EBB-90CD-51EFBF453FEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{B670240D-84EC-466B-AA8C-C63873CA438F}"
+	ProjectSection(SolutionItems) = preProject
+		deployApp.yml = deployApp.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +33,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B670240D-84EC-466B-AA8C-C63873CA438F} = {68E70151-E92A-4EBB-90CD-51EFBF453FEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BBCDE25-9F79-40F8-A635-B92F537ECC17}

@@ -15,7 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpCtx) : base(options)
     {
         _contextAccessor = httpCtx;
-        Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
