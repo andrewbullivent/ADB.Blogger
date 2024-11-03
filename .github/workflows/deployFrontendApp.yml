@@ -41,6 +41,7 @@ jobs:
                 
       - name: Build
         run: |
+          cd ./ADB.Blogger.Client
           npm install -g @angular/cli
           npm install
           ng build
